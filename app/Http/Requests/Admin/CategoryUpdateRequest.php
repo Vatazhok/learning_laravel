@@ -25,8 +25,8 @@ class CategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' =>'required|min:3|max:200',
-            'slug' =>'min:3|max:200'
+            'title' =>'required|min:5|max:200',
+            'slug' =>'required|min:3|max:200'
         ];
     }
 }
