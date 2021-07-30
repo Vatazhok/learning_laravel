@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostStoreAndUpdateRequest;
+use App\Http\Requests\Admin\PostStoreRequest;
+use App\Http\Requests\Admin\PostUpdateRequest;
 use App\Models\Category;
 use App\Models\Post;
 
@@ -48,7 +50,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(PostStoreAndUpdateRequest $request)
+    public function store(PostStoreRequest $request)
     {
         $post = new Post();
         $post->title = $request->title;
@@ -109,7 +111,7 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(PostStoreAndUpdateRequest $request, Post $post)
+    public function update(PostUpdateRequest $request, Post $post)
     {
         $post->title = $request->title;
         $post->category_id = $request->category_id;

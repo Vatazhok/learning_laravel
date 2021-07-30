@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CategoryStoreAndUpdateRequest;
+use App\Http\Requests\Admin\CategoryStoreRequest;
+use App\Http\Requests\Admin\CategoryUpdateRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -41,7 +42,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryStoreAndUpdateRequest $request)
+    public function store(CategoryStoreRequest $request)
     {
         $newCategory = new Category();
         $newCategory->title = $request->title;
@@ -88,7 +89,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryStoreAndUpdateRequest $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
         //$validated = $request->validated();
         $category->title = $request->title;
