@@ -23,7 +23,7 @@
             @if (session('success'))
                 <div class="alert alert-success" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><i class="icon fa fa-check"></i>{{ __('categorySuccess.update') }}</h4>
+                    <h4><i class="icon fa fa-check"></i>{{session('success') }}</h4>
                 </div>
             @endif
         </div><!-- /.container-fluid -->

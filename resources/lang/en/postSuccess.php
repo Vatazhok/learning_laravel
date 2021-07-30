@@ -1,6 +1,6 @@
 <?php
-return [
 
+return [
     /*
     |--------------------------------------------------------------------------
     | Authentication Language Lines
@@ -11,8 +11,7 @@ return [
     | these language lines according to your application's requirements.
     |
     */
-    'create' => 'Category successfully created',
-    'update' => 'Category successfully updated',
-
-
+    'create'  => 'The post was successfully created',
+    'update'  => 'The post was successfully updated',
+    'destroy' => 'The post was successfully destroyed',
 ];

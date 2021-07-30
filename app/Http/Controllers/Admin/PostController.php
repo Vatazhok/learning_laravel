@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PostStoreAndUpdateRequest;
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all('title');
+        $categories = Category::all();
         return view(
             'admin.post.create',
             [
@@ -44,10 +44,11 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostStoreAndUpdateRequest $request)
     {
         $post = new Post();
         $post->title = $request->title;
@@ -66,14 +67,14 @@ class PostController extends Controller
             $post->is_published = 0;
         }
         $post->save();
-
-        return redirect()->back()->withSuccess('Пост створено');
+        return redirect()->back()->withSuccess(__('postSuccess.create'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Post $post
+     * @param  \App\Models\Post  $post
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
@@ -84,17 +85,18 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Post $post
+     * @param  \App\Models\Post  $post
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Post $post)
     {
-        $categories = Category::all('title');
+        $categories = Category::all();
         return view(
             'admin.post.edit',
             [
                 'categories' => $categories,
-                'post' => $post,
+                'post'       => $post,
             ]
         );
     }
@@ -102,11 +104,12 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Post $post
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Post  $post
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostStoreAndUpdateRequest $request, Post $post)
     {
         $post->title = $request->title;
         $post->category_id = $request->category_id;
@@ -118,26 +121,25 @@ class PostController extends Controller
         $post->venue = $request->venue;
         $post->price = $request->price;
         $post->settlement = $request->settlement;
-
         if ($request->is_published == 1) {
             $post->is_published = $request->is_published;
         } else {
             $post->is_published = 0;
         }
         $post->save();
-
-        return redirect()->back()->withSuccess('Пост оновлено');
+        return redirect()->back()->withSuccess(__('postSuccess.update'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Post $post
+     * @param  \App\Models\Post  $post
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->back()->withSuccess('Пост успішно видалено');
+        return redirect()->back()->withSuccess(__('postSuccess.destroy'));
     }
 }

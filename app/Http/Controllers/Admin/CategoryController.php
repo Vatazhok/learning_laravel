@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\CategoryUpdateRequest;
+use App\Http\Requests\Admin\CategoryStoreAndUpdateRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -16,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderBy('id')->get(['id','title']);
+        $categories = Category::orderBy('id')->get(['id', 'title']);
         return view(
             'admin.category.index',
             [
@@ -38,22 +37,25 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
+     *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryStoreAndUpdateRequest $request)
     {
         $newCategory = new Category();
         $newCategory->title = $request->title;
         $newCategory->slug = $request->slug;
         $newCategory->save();
-        return redirect()->back()->withSuccess('Категорія була успішно створена');
+//
+        return redirect()->back()->withSuccess(__('categorySuccess.create'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -64,7 +66,8 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Category $category
+     * @param  \App\Models\Category  $category
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -80,31 +83,30 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryUpdateRequest $request, Category $category)
+    public function update(CategoryStoreAndUpdateRequest $request, Category $category)
     {
-        $validated = $request->validated();
-        $category->title = $validated['title'];
-        $category->slug = $validated['slug'];
+        //$validated = $request->validated();
+        $category->title = $request->title;
+        $category->slug = $request->slug;
         $category->save();
-//
-        return redirect()->back()->withSuccess(' ');
-
-
+        return redirect()->back()->withSuccess(__('categorySuccess.update'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->back()->withSuccess('Категорія була успішно видалена');
+        return redirect()->back()->withSuccess(__('categorySuccess.destroy'));
     }
 }

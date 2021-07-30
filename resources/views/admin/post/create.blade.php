@@ -10,10 +10,19 @@
                     <h1 class="m-0">Добавити пост</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @if (session('success'))
                 <div class="alert alert-success" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><i class="icon fa fa-check"></i>{{ session('success') }}</h4>
+                    <h4><i class="icon fa fa-check"></i>{{session('success') }}</h4>
                 </div>
             @endif
         </div><!-- /.container-fluid -->
@@ -48,7 +57,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Час</label>
                                     <input type="time" name="time" class="form-control" id="exampleInputEmail1"
-                                           placeholder="ВУведіть час проведення заходу" required>
+                                           placeholder="Уведіть час проведення заходу" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Місце проведення</label>
@@ -70,10 +79,11 @@
                                     <!-- select -->
                                     <div class="form-group">
                                         <label>Оберіть категорію</label>
-                                        <select name="category_id" class="form-control" required>
+                                        <select name="category_id" class="form-control">
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category['id'] }}">{{ $category['title'] }}</option>
                                             @endforeach
+
                                         </select>
                                     </div>
                                 </div>

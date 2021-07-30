@@ -10,10 +10,19 @@
                     <h1 class="m-0">Редагувати пост: {{$post->title}}</h1>
                 </div><!-- /.col -->
             </div><!-- /.row -->
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @if (session('success'))
                 <div class="alert alert-success" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <h4><i class="icon fa fa-check"></i>{{ session('success') }}</h4>
+                    <h4><i class="icon fa fa-check"></i>{{session('success') }}</h4>
                 </div>
             @endif
         </div><!-- /.container-fluid -->
@@ -71,7 +80,7 @@
                                     <!-- select -->
                                     <div class="form-group">
                                         <label>Выберите категорию</label>
-                                        <select name="category_id" class="form-control" required>
+                                        <select name="category_id" class="form-control">
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category['id'] }}" @if($category['id']==$post['category_id']) selected @endif>{{ $category['title'] }}</option>
                                             @endforeach
